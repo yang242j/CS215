@@ -1,0 +1,321 @@
+lab8
+
+Step1: Load the students table by using the source command
+==========================================================
+
+	Download "students.sql" into public_html folder
+
+	a049835[25]% chmod 644 source
+	a049835[29]% ssh hercules
+	yang242j@hercules's password: 
+	hercules[21]% mysql -p yang242j
+	Enter password: 
+
+	mysql> source ~/public_html/students.sql
+	Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+	Query OK, 0 rows affected (0.01 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	Query OK, 1 row affected (0.00 sec)
+
+	mysql> describe students;
+	+--------------------+--------------+------+-----+---------+-------+
+	| Field              | Type         | Null | Key | Default | Extra |
+	+--------------------+--------------+------+-----+---------+-------+
+	| student_ID         | varchar(30)  | NO   |     | NULL    |       |
+	| first_Name         | varchar(30)  | NO   |     | NULL    |       |
+	| middle_Name        | varchar(30)  | YES  |     | NULL    |       |
+	| last_Name          | varchar(30)  | NO   |     | NULL    |       |
+	| email              | varchar(100) | NO   |     | NULL    |       |
+	| course_Name        | varchar(30)  | NO   |     | NULL    |       |
+	| course_Description | varchar(255) | NO   |     | NULL    |       |
+	| marks              | double       | NO   |     | NULL    |       |
+	+--------------------+--------------+------+-----+---------+-------+
+	8 rows in set (0.00 sec)
+
+Step2: Fix incorrect data	Note: keep the commands (e.g., update, delete, etc.) as part of the solution for the exercises.
+==============================================================================================================================
+
+	1.A student, Ahmed Abbad, has a problem with his email address. Find the problem and use update command to fix it.
+	-----------------------------------------------------------------------------------------------------------------
+
+		mysql> select * from students where first_Name = "Ahmed";
+		+------------+------------+-------------+-----------+-------------------------+-------------+----------------------------------+-------+
+		| student_ID | first_Name | middle_Name | last_Name | email                   | course_Name | course_Description               | marks |
+		+------------+------------+-------------+-----------+-------------------------+-------------+----------------------------------+-------+
+		| 200266200  | Ahmed      | Al          | Abbad     | alabba200cs.uregina.ca  | CS100       | Introduction to Computers        |  90.5 |
+		| 200266200  | Ahmed      | Al          | Abbad     | alabba200cs.uregina.ca  | CS110       | Programming and Problem Solving  |    85 |
+		| 200266200  | Ahmed      | Al          | Abbad     | alabba200@cs.uregina.ca | CS210       | Data Structures and Abstractions |    90 |
+		+------------+------------+-------------+-----------+-------------------------+-------------+----------------------------------+-------+
+		3 rows in set (0.00 sec)
+
+		mysql> update students set email = "alabba200@cs.uregina.ca" where first_Name = "Ahmed";
+		Query OK, 2 rows affected (0.00 sec)
+		Rows matched: 3  Changed: 2  Warnings: 0
+
+		mysql>  select * from students where first_Name = "Ahmed";
+		+------------+------------+-------------+-----------+-------------------------+-------------+----------------------------------+-------+
+		| student_ID | first_Name | middle_Name | last_Name | email                   | course_Name | course_Description               | marks |
+		+------------+------------+-------------+-----------+-------------------------+-------------+----------------------------------+-------+
+		| 200266200  | Ahmed      | Al          | Abbad     | alabba200@cs.uregina.ca | CS100       | Introduction to Computers        |  90.5 |
+		| 200266200  | Ahmed      | Al          | Abbad     | alabba200@cs.uregina.ca | CS110       | Programming and Problem Solving  |    85 |
+		| 200266200  | Ahmed      | Al          | Abbad     | alabba200@cs.uregina.ca | CS210       | Data Structures and Abstractions |    90 |
+		+------------+------------+-------------+-----------+-------------------------+-------------+----------------------------------+-------+
+		3 rows in set (0.00 sec)
+
+	2.Yupeng Xu doesn't have a middle name, but the system put his last name into the middle name column. Try to fix the problem for him.
+	------------------------------------------------------------------------------------------------------------------------------------
+
+		mysql> select * from students where first_Name = "Yupeng";
+		+------------+------------+-------------+-----------+--------------------+-------------+----------------------------------+-------+
+		| student_ID | first_Name | middle_Name | last_Name | email              | course_Name | course_Description               | marks |
+		+------------+------------+-------------+-----------+--------------------+-------------+----------------------------------+-------+
+		| 200266210  | Yupeng     | Xu          |           | x210@cs.uregina.ca | CS100       | Introduction to Computers        |    89 |
+		| 200266210  | Yupeng     | Xu          |           | x210@cs.uregina.ca | CS210       | Data Structures and Abstractions |    92 |
+		+------------+------------+-------------+-----------+--------------------+-------------+----------------------------------+-------+
+		2 rows in set (0.00 sec)
+
+		mysql>  update students set last_Name = "Xu" where first_Name ="Yupeng";
+		Query OK, 2 rows affected (0.00 sec)
+		Rows matched: 2  Changed: 2  Warnings: 0
+
+		mysql> select * from students where first_Name = "Yupeng"; 
+		+------------+------------+-------------+-----------+--------------------+-------------+----------------------------------+-------+
+		| student_ID | first_Name | middle_Name | last_Name | email              | course_Name | course_Description               | marks |
+		+------------+------------+-------------+-----------+--------------------+-------------+----------------------------------+-------+
+		| 200266210  | Yupeng     | Xu          | Xu        | x210@cs.uregina.ca | CS100       | Introduction to Computers        |    89 |
+		| 200266210  | Yupeng     | Xu          | Xu        | x210@cs.uregina.ca | CS210       | Data Structures and Abstractions |    92 |
+		+------------+------------+-------------+-----------+--------------------+-------------+----------------------------------+-------+
+		2 rows in set (0.00 sec)
+
+		mysql> update students set middle_Name = " " where first_Name = "Yupeng";
+		Query OK, 2 rows affected (0.00 sec)
+		Rows matched: 2  Changed: 2  Warnings: 0
+
+		mysql> select * from students where first_Name = "Yupeng";
+		+------------+------------+-------------+-----------+--------------------+-------------+----------------------------------+-------+
+		| student_ID | first_Name | middle_Name | last_Name | email              | course_Name | course_Description               | marks |
+		+------------+------------+-------------+-----------+--------------------+-------------+----------------------------------+-------+
+		| 200266210  | Yupeng     |             | Xu        | x210@cs.uregina.ca | CS100       | Introduction to Computers        |    89 |
+		| 200266210  | Yupeng     |             | Xu        | x210@cs.uregina.ca | CS210       | Data Structures and Abstractions |    92 |
+		+------------+------------+-------------+-----------+--------------------+-------------+----------------------------------+-------+
+		2 rows in set (0.00 sec)
+
+	3.The course description of CS215 should be Web and Database Programming, but some records use a different description for CS215, find it and fix it.
+	-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+		mysql> select * from students where course_Name = "CS215";
+		+------------+------------+-------------+-------------+--------------------------+-------------+----------------------------------+-------+
+		| student_ID | first_Name | middle_Name | last_Name   | email                    | course_Name | course_Description               | marks |
+		+------------+------------+-------------+-------------+--------------------------+-------------+----------------------------------+-------+
+		| 200266202  | Qaswar     |             | Rai         | ali202@cs.uregina.ca     | CS215       | Web Oriented Programming         |  82.6 |
+		| 200266203  | Nicholas   |             | Phongsavath | phosan203@cs.uregina.ca  | CS215       | Web Oriented Programming         |   100 |
+		| 200266206  | John       |             | Erick       | eric20j206@cs.uregina.ca | CS215       | Web Oriented Programming         |    83 |
+		| 200266207  | Jody-Lee   | Van         | DerVelden   | vanervj207@cs.uregina.ca | CS215       | Web Oriented Programming         |  85.6 |
+		| 200266209  | Ke         |             | Tao         | taoke209@cs.uregina.ca   | CS215       | Data Structures and Abstractions |  86.5 |
+		| 200266212  | Mandeep    |             | Ghotra      | gho212@cs.uregina.ca     | CS215       | Web Oriented Programming         |    98 |
+		+------------+------------+-------------+-------------+--------------------------+-------------+----------------------------------+-------+
+		6 rows in set (0.00 sec)
+
+		mysql> update students set course_Description = "Web and Database Programming" where course_Name = "CS215";
+		Query OK, 6 rows affected (0.00 sec)
+		Rows matched: 6  Changed: 6  Warnings: 0
+
+		mysql> select * from students where course_Name = "CS215";
+		+------------+------------+-------------+-------------+--------------------------+-------------+------------------------------+-------+
+		| student_ID | first_Name | middle_Name | last_Name   | email                    | course_Name | course_Description           | marks |
+		+------------+------------+-------------+-------------+--------------------------+-------------+------------------------------+-------+
+		| 200266202  | Qaswar     |             | Rai         | ali202@cs.uregina.ca     | CS215       | Web and Database Programming |  82.6 |
+		| 200266203  | Nicholas   |             | Phongsavath | phosan203@cs.uregina.ca  | CS215       | Web and Database Programming |   100 |
+		| 200266206  | John       |             | Erick       | eric20j206@cs.uregina.ca | CS215       | Web and Database Programming |    83 |
+		| 200266207  | Jody-Lee   | Van         | DerVelden   | vanervj207@cs.uregina.ca | CS215       | Web and Database Programming |  85.6 |
+		| 200266209  | Ke         |             | Tao         | taoke209@cs.uregina.ca   | CS215       | Web and Database Programming |  86.5 |
+		| 200266212  | Mandeep    |             | Ghotra      | gho212@cs.uregina.ca     | CS215       | Web and Database Programming |    98 |
+		+------------+------------+-------------+-------------+--------------------------+-------------+------------------------------+-------+
+		6 rows in set (0.00 sec)
+
+	4.A student, Tao Ke, is taking a course "CS000" that does not exist. Use delete command to remove this record.
+	-------------------------------------------------------------------------------------------------------------
+
+		mysql> select * from students where first_Name = "Ke";  
+		+------------+------------+-------------+-----------+------------------------+-------------+----------------------------------+-------+
+		| student_ID | first_Name | middle_Name | last_Name | email                  | course_Name | course_Description               | marks |
+		+------------+------------+-------------+-----------+------------------------+-------------+----------------------------------+-------+
+		| 200266209  | Ke         |             | Tao       | taoke209@cs.uregina.ca | CS110       | Programming and Problem Solving  |  66.5 |
+		| 200266209  | Ke         |             | Tao       | taoke209@cs.uregina.ca | CS210       | Data Structures and Abstractions |  77.5 |
+		| 200266209  | Ke         |             | Tao       | taoke209@cs.uregina.ca | CS215       | Web and Database Programming     |  86.5 |
+		| 200266209  | Ke         |             | Tao       | taoke209@cs.uregina.ca | CS000       | 00000000000000000000000          |     0 |
+		+------------+------------+-------------+-----------+------------------------+-------------+----------------------------------+-------+
+		4 rows in set (0.00 sec)
+
+		mysql> delete from students where course_Name = "CS000";
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> select * from students where first_Name = "Ke";
+		+------------+------------+-------------+-----------+------------------------+-------------+----------------------------------+-------+
+		| student_ID | first_Name | middle_Name | last_Name | email                  | course_Name | course_Description               | marks |
+		+------------+------------+-------------+-----------+------------------------+-------------+----------------------------------+-------+
+		| 200266209  | Ke         |             | Tao       | taoke209@cs.uregina.ca | CS110       | Programming and Problem Solving  |  66.5 |
+		| 200266209  | Ke         |             | Tao       | taoke209@cs.uregina.ca | CS210       | Data Structures and Abstractions |  77.5 |
+		| 200266209  | Ke         |             | Tao       | taoke209@cs.uregina.ca | CS215       | Web and Database Programming     |  86.5 |
+		+------------+------------+-------------+-----------+------------------------+-------------+----------------------------------+-------+
+		3 rows in set (0.00 sec)
+
+Step3: Decompose the students table into three new tables
+=========================================================
+Decompose students table into three sub tables according to the following description:
+
+	1.Create a table called Student_Info contains five attributes, student ID, first_name, middle_name, last_name and email address.
+	--------------------------------------------------------------------------------------------------------------------------------
+
+		mysql> CREATE TABLE Student_Info (
+			-> student_ID int, 
+    		-> first_name varchar(30),
+    		-> middle_name varchar(30),
+    		-> last_name varchar(30),
+    		-> email_address varchar(100)
+    		-> );
+		Query OK, 0 rows affected (0.01 sec)
+
+	2.Create a table called Courses contains two attributes, course_Name and course_Description.
+	--------------------------------------------------------------------------------------------
+
+		mysql> CREATE TABLE Courses (
+		    -> course_Name varchar(30),
+		    -> course_Description varchar(30)
+		    -> );
+		Query OK, 0 rows affected (0.01 sec)
+
+	3.Create a third table called Marks table contains student_ID, course_Name and marks.
+	-------------------------------------------------------------------------------------
+
+		mysql> CREATE TABLE Marks ( student_ID varchar(30), course_Name varchar(30), marks varchar(30) );
+		Query OK, 0 rows affected (0.01 sec)
+
+	ALERT:
+	------
+
+		mysql> ALTER TABLE Student_Info ADD PRIMARY KEY (student_ID);
+		Query OK, 12 rows affected (0.01 sec)
+		Records: 12  Duplicates: 0  Warnings: 0
+
+		mysql> ALTER TABLE Courses ADD PRIMARY KEY (course_Name);
+		Query OK, 4 rows affected (0.01 sec)
+		Records: 4  Duplicates: 0  Warnings: 0
+
+		mysql> ALTER TABLE Marks ADD FOREIGN KEY (student_ID) REFERENCES Student_Info (student_ID);
+		Query OK, 30 rows affected (0.01 sec)
+		Records: 30  Duplicates: 0  Warnings: 0
+
+		mysql> ALTER TABLE Marks ADD FOREIGN KEY (course_Name) REFERENCES Courses (course_Name);
+		Query OK, 30 rows affected (0.00 sec)
+		Records: 30  Duplicates: 0  Warnings: 0
+
+		mysql> describe Student_Info;
+		+---------------+--------------+------+-----+---------+-------+
+		| Field         | Type         | Null | Key | Default | Extra |
+		+---------------+--------------+------+-----+---------+-------+
+		| student_ID    | int(11)      | NO   | PRI | 0       |       |
+		| first_name    | varchar(30)  | YES  |     | NULL    |       |
+		| middle_name   | varchar(30)  | YES  |     | NULL    |       |
+		| last_name     | varchar(30)  | YES  |     | NULL    |       |
+		| email_address | varchar(100) | YES  |     | NULL    |       |
+		+---------------+--------------+------+-----+---------+-------+
+		5 rows in set (0.00 sec)
+
+		mysql> describe Courses;
+		+--------------------+-------------+------+-----+---------+-------+
+		| Field              | Type        | Null | Key | Default | Extra |
+		+--------------------+-------------+------+-----+---------+-------+
+		| course_Name        | varchar(30) | NO   | PRI |         |       |
+		| course_Description | varchar(30) | YES  |     | NULL    |       |
+		+--------------------+-------------+------+-----+---------+-------+
+		2 rows in set (0.00 sec)
+
+		mysql> describe Marks;
+		+-------------+-------------+------+-----+---------+-------+
+		| Field       | Type        | Null | Key | Default | Extra |
+		+-------------+-------------+------+-----+---------+-------+
+		| student_ID  | varchar(30) | YES  | MUL | NULL    |       |
+		| course_Name | varchar(30) | YES  | MUL | NULL    |       |
+		| marks       | varchar(30) | YES  |     | NULL    |       |
+		+-------------+-------------+------+-----+---------+-------+
+		3 rows in set (0.00 sec)
+
+Step4: Extract records from students table and insert into new tables
+=====================================================================
+
+		mysql> insert into Student_Info(student_ID, first_name, middle_name, last_name, email_address)
+		    -> select distinct student_ID, first_Name,middle_Name, last_Name, email from students;
+		Query OK, 12 rows affected (0.00 sec)
+		Records: 12  Duplicates: 0  Warnings: 0
+
+		mysql> insert into Courses(course_Name,course_Description)                                                               
+		    -> select distinct course_Name, course_Description from students;
+		Query OK, 4 rows affected, 2 warnings (0.00 sec)
+		Records: 4  Duplicates: 0  Warnings: 2
+
+		mysql> insert into Marks(student_ID, course_Name, marks)
+		    -> select distinct student_ID, course_Name, marks from students;
+		Query OK, 30 rows affected (0.00 sec)
+		Records: 30  Duplicates: 0  Warnings: 0
