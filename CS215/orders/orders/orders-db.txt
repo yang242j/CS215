@@ -1,0 +1,25 @@
+CREATE TABLE Users (
+	user_id INT NOT NULL AUTO_INCREMENT,
+	email VARCHAR(512) NOT NULL,
+	password VARCHAR(64) NOT NULL,
+	first_name VARCHAR(128) NOT NULL,
+	last_name VARCHAR(128) NOT NULL,
+	PRIMARY KEY (user_id)
+);
+
+CREATE TABLE Orders (
+	order_id INT NOT NULL AUTO_INCREMENT,
+	user_id INT NOT NULL,
+	order_details VARCHAR (1024),
+	PRIMARY KEY (order_id),
+	FOREIGN KEY (user_id) REFERENCES Users (user_id)
+);
+
+INSERT INTO Users (email, password, first_name, last_name) VALUES ("orland.hoeber@uregina.ca", "pwd", "Orland", "Hoeber");
+INSERT INTO Users (email, password, first_name, last_name) VALUES ("me@joe.com", "pwd", "Joe", "Smith");
+
+INSERT INTO Orders (user_id, order_details) VALUES (1, "My first order on the system.");
+INSERT INTO Orders (user_id, order_details) VALUES (1, "A new hard drive for my NAS.");
+INSERT INTO Orders (user_id, order_details) VALUES (1, "An iPad Mini.");
+INSERT INTO Orders (user_id, order_details) VALUES (2, "A Tivoli Radio.");
+INSERT INTO Orders (user_id, order_details) VALUES (2, "An iPhone docking station.");

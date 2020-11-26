@@ -1,0 +1,25 @@
+Link of my store's home page:
+http://www2.cs.uregina.ca/~li787/assignment/Home.html
+
+
+Nu Html Checker for home page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FHome.html
+
+
+Nu Html Checker for Profile page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FProfilePage.html
+
+
+Nu Html Checker for Administrator page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FAdministratorPage.html
+
+
+Nu Html Checker for Products page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FProductsPage.html
+
+
+Nu Html Checker for Registration page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FRegistrationPage.html
+
+Nu Html Checker for Cart page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FCartPage.html

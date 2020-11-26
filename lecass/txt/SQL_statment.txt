@@ -1,0 +1,274 @@
+lecture assignment 4
+Login: hercules & mysql
+=======================
+
+	a049837[46]% ssh hercules
+	yang242j@hercules's password: Yjk1996!
+	hercules[46]% mysql -p yang242j
+	Enter password: yjk1996
+
+step1: ERD and database specification
+=====================================
+
+	This ERD must document the data model for the entire system, and should conform to the second normal form specification for the data model.
+	-------------------------------------------------------------------------------------------------------------------------------------------
+		
+		ERD location is ~/public_html/ERD_yang242j.pdf
+
+step2: Data Storage Queries
+===========================
+
+	-------------------------------------------------------CREATE TABLE "Users"----------------------------------------------------------
+	
+		mysql>  CREATE TABLE Users (
+		-> user_id INT NOT NULL AUTO_INCREMENT,
+		-> email VARCHAR(100) NOT NULL,
+		-> screen_name VARCHAR(50) NOT NULL,  
+		-> birthday VARCHAR(10) NOT NULL, 
+		-> avatar VARCHAR(100), 
+		-> password VARCHAR(8) NOT NULL, 
+		-> PRIMARY KEY (user_ID)
+		-> );
+		Query OK, 0 rows affected (0.11 sec)
+
+		mysql> describe Users;
+		+-------------+--------------+------+-----+---------+----------------+
+		| Field       | Type         | Null | Key | Default | Extra          |
+		+-------------+--------------+------+-----+---------+----------------+
+		| user_id     | int(11)      | NO   | PRI | NULL    | auto_increment |
+		| email       | varchar(100) | NO   |     | NULL    |                |
+		| screen_name | varchar(50)  | NO   |     | NULL    |                |
+		| birthday    | varchar(10)  | NO   |     | NULL    |                |
+		| avatar      | varchar(100) | YES  |     | NULL    |                |
+		| password    | varchar(8)   | NO   |     | NULL    |                |
+		+-------------+--------------+------+-----+---------+----------------+
+		6 rows in set (0.00 sec)
+
+
+	-------------------------------------------------------INSERT DATA TO TABLE "Users"----------------------------------------------------------
+	-------------------------------------------------------FROM SIGN-UP FORM--------------------------------------------------------------------
+
+		mysql> INSERT INTO Users (email, screen_name, birthday, password) VALUES ('yang242j@uregina.ca', 'yang242j', '1996-11-30', 'yjk1996');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> INSERT INTO Users (email, screen_name, birthday, password) VALUES ('cs215@uregina.ca', 'cs215', '1996-11-30', 'cs215lec');
+		Query OK, 1 row affected (0.00 sec)
+
+
+	-------------------------------------------------------SELECT ALL FROM TABLE "User"----------------------------------------------------------
+	-------------------------------------------------------SHOW ALL DATA OF TABLE "User"----------------------------------------------------------
+
+		mysql> SELECT * FROM Users;
+		+---------+---------------------+-------------+------------+--------+----------+
+		| user_id | email               | screen_name | birthday   | avatar | password |
+		+---------+---------------------+-------------+------------+--------+----------+
+		|       1 | yang242j@uregina.ca | yang242j    | 1996-11-30 | NULL   | yjk1996  |
+		|       2 | cs215@uregina.ca    | cs215       | 1996-11-30 | NULL   | cs215lec |
+		+---------+---------------------+-------------+------------+--------+----------+
+		2 rows in set (0.00 sec)
+
+
+	-------------------------------------------------------CREATE TABLE "Polls"-----------------------------------------------------------------
+
+		mysql> CREATE TABLE Polls(
+		-> poll_id INT NOT NULL AUTO_INCREMENT,
+		-> user_id INT NOT NULL,
+		-> question varchar(100) NOT NULL,
+		-> created_dt DATE NOT NULL,
+		-> open_dt DATE NOT NULL,
+		-> close_dt DATE NOT NULL,
+		-> last_vote_dt DATE NOT NULL,
+		-> PRIMARY KEY (poll_id), 
+		-> FOREIGN KEY (user_id) REFERENCES Users (user_id));
+		Query OK, 0 rows affected (0.01 sec)
+
+		mysql> describe Polls;
+		+--------------+--------------+------+-----+---------+----------------+
+		| Field        | Type         | Null | Key | Default | Extra          |
+		+--------------+--------------+------+-----+---------+----------------+
+		| poll_id      | int(11)      | NO   | PRI | NULL    | auto_increment |
+		| user_id      | int(11)      | NO   | MUL | NULL    |                |
+		| question     | varchar(100) | NO   |     | NULL    |                |
+		| created_dt   | date         | NO   |     | NULL    |                |
+		| open_dt      | date         | NO   |     | NULL    |                |
+		| close_dt     | date         | NO   |     | NULL    |                |
+		| last_vote_dt | date         | NO   |     | NULL    |                |
+		+--------------+--------------+------+-----+---------+----------------+
+		7 rows in set (0.00 sec)
+
+
+	-------------------------------------------------------INSERT QUESTION AND ANSWER TO TABLE "Polls"----------------------------------------------------------
+	-------------------------------------------------------FROM POLL CREATION FORM---------------------------------------------------------------------------------
+
+		mysql> insert into Polls (question, created_dt, open_dt, close_dt, last_vote_dt)  VALUES ('ABCDE', '2017-12-30', '2018-01-01', '2018-02-02', '2018-01-30');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> insert into Polls (question, created_dt, open_dt, close_dt, last_vote_dt)  VALUES ('Sunny day?', '2017-12-15', '2018-01-01', '2018-02-02', '2018-01-15');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> insert into Polls (question, created_dt, open_dt, close_dt, last_vote_dt)  VALUES ('Snow day?', '2018-01-01', '2018-01-02', '2018-02-02', '2018-01-10');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> insert into Polls (question, created_dt, open_dt, close_dt, last_vote_dt)  VALUES ('Windy day?', '2018-01-02', '2018-01-03', '2018-02-02', '2018-01-10');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> insert into Polls (question, created_dt, open_dt, close_dt, last_vote_dt)  VALUES ('Crazy day?', '2018-01-03', '2018-01-04', '2018-02-02', '2018-01-15');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> SELECT * FROM Polls;   
+		+---------+---------+------------+------------+------------+------------+--------------+
+		| poll_id | user_id | question   | created_dt | open_dt    | close_dt   | last_vote_dt |
+		+---------+---------+------------+------------+------------+------------+--------------+
+		|       1 |       0 | ABCDE      | 2017-12-30 | 2018-01-01 | 2018-02-02 | 2018-01-30   |
+		|       2 |       0 | Sunny day? | 2017-12-15 | 2018-01-01 | 2018-02-02 | 2018-01-15   |
+		|       3 |       0 | Snow day?  | 2018-01-01 | 2018-01-02 | 2018-02-02 | 2018-01-10   |
+		|       4 |       0 | Windy day? | 2018-01-02 | 2018-01-03 | 2018-02-02 | 2018-01-10   |
+		|       5 |       0 | Crazy day? | 2018-01-03 | 2018-01-04 | 2018-02-02 | 2018-01-15   |
+		+---------+---------+------------+------------+------------+------------+--------------+
+		5 rows in set (0.00 sec)
+
+
+	-------------------------------------------------------CREATE TABLE "Answers"-----------------------------------------------------------------
+		mysql> CREATE TABLE Answers (
+		-> answer_id INT NOT NULL AUTO_INCREMENT, 
+		-> poll_id INT NOT NULL,
+		-> answer VARCHAR(50) NOT NULL, 
+		-> vote_count INT NOT NULL,
+		-> PRIMARY KEY (answer_id), 
+		-> FOREIGN KEY (poll_id) REFERENCES Polls (poll_id));
+		Query OK, 0 rows affected (0.02 sec)
+
+		mysql> describe Answers;
+		+------------+-------------+------+-----+---------+----------------+
+		| Field      | Type        | Null | Key | Default | Extra          |
+		+------------+-------------+------+-----+---------+----------------+
+		| answer_id  | int(11)     | NO   | PRI | NULL    | auto_increment |
+		| poll_id    | int(11)     | NO   | MUL | NULL    |                |
+		| answer     | varchar(50) | NO   |     | NULL    |                |
+		| vote_count | int(11)     | NO   |     | NULL    |                |
+		+------------+-------------+------+-----+---------+----------------+
+		4 rows in set (0.00 sec)
+
+
+	-------------------------------------------------------INSERT QUESTION ANSWERS TO TABLE "Answers"----------------------------------------------------------------
+	-------------------------------------------------------FROM POLL VOTE PAGE---------------------------------------------------------------------------------
+
+		mysql> insert into Answers (poll_id, answer, vote_count) VALUES ('1', 'A', '1');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> insert into Answers (poll_id, answer, vote_count) VALUES ('1', 'B', '10');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> insert into Answers (poll_id, answer, vote_count) VALUES ('1', 'C', '9');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> insert into Answers (poll_id, answer, vote_count) VALUES ('1', 'D', '15');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> insert into Answers (poll_id, answer, vote_count) VALUES ('2', 'YES', '10');
+		Query OK, 1 row affected (0.00 sec)
+
+		mysql> insert into Answers (poll_id, answer, vote_count) VALUES ('2', 'NO', '0');
+		Query OK, 1 row affected (0.00 sec)
+
+
+		mysql> SELECT * FROM Answers;
+		+-----------+---------+--------+------------+
+		| answer_id | poll_id | answer | vote_count |
+		+-----------+---------+--------+------------+
+		|         1 |       1 | A      |          1 |
+		|         2 |       1 | B      |         10 |
+		|         3 |       1 | C      |          9 |
+		|         4 |       1 | D      |         15 |
+		|         5 |       2 | YES    |         10 |
+		|         6 |       2 | NO     |          0 |
+		+-----------+---------+--------+------------+
+		6 rows in set (0.00 sec)
+
+
+step3: Data Retrieval Queries
+=============================
+
+	-------------------------------------------------------SELECT DATA FROM TABLE "Polls"----------------------------------------------------------------
+	-------------------------------------------------------POST ON MAIN PAGE------------------------------------------------------------------------------
+
+		mysql> SELECT * FROM Polls ORDER BY last_vote_dt DESC LIMIT 5;
+
+		+---------+---------+------------+------------+------------+------------+--------------+
+		| poll_id | user_id | question   | created_dt | open_dt    | close_dt   | last_vote_dt |
+		+---------+---------+------------+------------+------------+------------+--------------+
+		|       1 |       0 | ABCDE      | 2017-12-30 | 2018-01-01 | 2018-02-02 | 2018-01-30   |
+		|       2 |       0 | Sunny day? | 2017-12-15 | 2018-01-01 | 2018-02-02 | 2018-01-15   |
+		|       5 |       0 | Crazy day? | 2018-01-03 | 2018-01-04 | 2018-02-02 | 2018-01-15   |
+		|       3 |       0 | Snow day?  | 2018-01-01 | 2018-01-02 | 2018-02-02 | 2018-01-10   |
+		|       4 |       0 | Windy day? | 2018-01-02 | 2018-01-03 | 2018-02-02 | 2018-01-10   |
+		+---------+---------+------------+------------+------------+------------+--------------+
+		5 rows in set (0.00 sec)
+
+	-------------------------------------------------------SELECT DATA FROM TABLE "Users"----------------------------------------------------------------
+	-------------------------------------------------------MATCH WITH LOGIN FORM------------------------------------------------------------------------------
+
+		mysql> SELECT * FROM Users WHERE screen_name='yang242j' AND password='yjk1996';
+
+		+---------+---------------------+-------------+------------+--------+----------+
+		| user_id | email               | screen_name | birthday   | avatar | password |
+		+---------+---------------------+-------------+------------+--------+----------+
+		|       1 | yang242j@uregina.ca | yang242j    | 1996-11-30 | NULL   | yjk1996  |
+		+---------+---------------------+-------------+------------+--------+----------+
+		1 row in set (0.00 sec)
+
+		mysql> SELECT * FROM Users WHERE screen_name='yang242j' AND password='1234567'; 
+		Empty set (0.00 sec)
+
+	-------------------------------------------------------SELECT DATA FROM TABLE "Polls"----------------------------------------------------------------
+	-------------------------------------------------------POST ON POLL MANAGMENT PAGE------------------------------------------------------------------------------
+
+		mysql> SELECT Polls.user_id, Polls.poll_id, Polls.question, Polls.last_vote_dt, Answers.answer FROM Polls JOIN Answers ON Polls.poll_id=Answers.poll_id AND Polls.user_id=0 
+		-> ORDER BY last_vote_dt DESC;
+
+		+---------+---------+------------+--------------+--------+
+		| user_id | poll_id | question   | last_vote_dt | answer |
+		+---------+---------+------------+--------------+--------+
+		|       0 |       1 | ABCDE      | 2018-01-30   | D      |
+		|       0 |       1 | ABCDE      | 2018-01-30   | A      |
+		|       0 |       1 | ABCDE      | 2018-01-30   | C      |
+		|       0 |       1 | ABCDE      | 2018-01-30   | B      |
+		|       0 |       2 | Sunny day? | 2018-01-15   | NO     |
+		|       0 |       2 | Sunny day? | 2018-01-15   | YES    |
+		+---------+---------+------------+--------------+--------+
+		6 rows in set (0.00 sec)
+
+
+
+	-------------------------------------------------------SELECT DATA FROM TABLE "Polls"----------------------------------------------------------------
+	-------------------------------------------------------POST ON POLL VOTE PAGE------------------------------------------------------------------------------
+
+		mysql> SELECT Polls.poll_id, Polls.question, Answers.answer FROM Polls JOIN Answers ON Polls.poll_id = Answers.poll_id AND Polls.poll_id = 1;
+
+		+---------+----------+--------+
+		| poll_id | question | answer |
+		+---------+----------+--------+
+		|       1 | ABCDE    | A      |
+		|       1 | ABCDE    | B      |
+		|       1 | ABCDE    | C      |
+		|       1 | ABCDE    | D      |
+		+---------+----------+--------+
+		4 rows in set (0.00 sec)
+
+
+	-------------------------------------------------------SELECT DATA FROM TABLE "Polls" AND TABLE "Answers"--------------------------------------------------
+	-------------------------------------------------------POST ON POLL RESULT PAGE------------------------------------------------------------------------------
+
+		mysql> SELECT Polls.poll_id, Polls.question, Polls.last_vote_dt, Answers.answer, Answers.vote_count FROM Polls JOIN Answers ON Polls.poll_id = Answers.poll_id AND Polls.poll_id = 2 
+		-> ORDER BY last_vote_dt DESC;
+
+		+---------+------------+--------------+--------+------------+
+		| poll_id | question   | last_vote_dt | answer | vote_count |
+		+---------+------------+--------------+--------+------------+
+		|       2 | Sunny day? | 2018-01-15   | YES    |         10 |
+		|       2 | Sunny day? | 2018-01-15   | NO     |          0 |
+		+---------+------------+--------------+--------+------------+
+		2 rows in set (0.00 sec)
+
+
+

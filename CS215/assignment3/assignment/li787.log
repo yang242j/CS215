@@ -1,0 +1,72 @@
+Qixuan Li
+200353092
+CS215
+
+
+Link of my store's home page:
+http://www2.cs.uregina.ca/~li787/assignment/Home.html
+
+
+Nu Html Checker for home page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FHome.html
+
+
+Nu Html Checker for Profile page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FProfilePage.html
+
+
+Nu Html Checker for Administrator page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FAdministratorPage.html
+
+
+Nu Html Checker for Products page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FProductsPage.html
+
+
+Nu Html Checker for Registration page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FRegistrationPage.html
+
+Nu Html Checker for Cart page:
+https://validator.w3.org/nu/?doc=http%3A%2F%2Fwww2.cs.uregina.ca%2F%7Eli787%2Fassignment%2FCartPage.html
+
+Explanation of the purpose of each file:
+
+AdministratorPage.html: it is the administrator page in my store website
+
+CartPage.html: it is the cart page in my store website
+
+Home.html:it is the home page in my store website
+
+homeEX.css: it is the css file which is used on all website of my store
+
+li787.log: some simple information of my assignment file
+
+ProductsPage.html: it is the product page in my store website
+
+ProfilePage.html: it is the profile page in my store website
+
+Question1.pdf: it is the Question1 for assignment 1
+
+Sketches.pdf: it is my plan of my store website for assignment 1
+
+RegistrationPage.html: it is the registration page in my store website
+
+TotalJS.js: it is the javascript file, and it can be used for every website of my store website. it is for assignment 2
+
+Home.php: home page for consumers
+
+HomeA.php: home page for administrator
+
+addnewcategroy.php: add or remove category
+
+newProduct.php: add new product
+
+CartPage.php: cart page for consumers
+
+CartPageA.php: cart page for administrator
+
+editInfromation.php: edit information for user
+
+
+URL.txt: it include some websites which can be checked by marker easily
+
